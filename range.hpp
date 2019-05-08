@@ -11,21 +11,34 @@ namespace itertools{
 
 
         //INNER CLASS - iterator
-        class iterator { 
+        class iterator {
+
             
+
             public:
-            iterator(){};
+            T value;
+            iterator(T a): value(a){};
 
+            iterator& operator=(const iterator& rhs){
+                value = rhs.value;
+            };
+            
+            T& operator*() const {
+                return value;
+            };
 
-            iterator& operator=(const iterator& rhs){};
-            T& operator*() const {};
-            const iterator operator++() {};
-            bool operator!=(const iterator& rhs) const {};
+            const iterator operator++() {
+                value++;
+            };
+
+            bool operator!=(const iterator& rhs) const {
+                return value != rhs.value;
+            };
         };
         //END CLASS - iterator
 
 
-        iterator begin() {};
-        iterator end() {};
+        iterator begin() {return iterator{a};};
+        iterator end() {return iterator{b};};
     };
 };
