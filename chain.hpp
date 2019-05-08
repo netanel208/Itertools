@@ -1,17 +1,14 @@
 #include "range.hpp"
 namespace itertools{
-    // template<typename K> class collect{
-    //     public:
-    //     K col;
-    //     collect(K col):col(col); 
-    // };
+
 
     template<typename T> class chain{
         public:
-        // collect<T> a;
-        // collect<T> b;
         
-        template<typename K1, typename K2> chain(K1 a, K2 b){};
+        chain(range<T> k1, range<T> k2){};
+        template<typename R> chain(range<T> k1, R k2){};
+        template<typename R> chain(R k1, range<T> k2){};
+        template<typename R1, typename R2> chain(R1 r1, R2 r2){};
 
         //INNER CLASS - iterator
         class iterator { 
