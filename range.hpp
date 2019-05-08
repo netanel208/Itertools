@@ -1,5 +1,5 @@
 /**
- * range(int,int) -> have to return refernce to object of this class
+ * range(int,int) -> have to return refernce/new object to object of this class
  */
 #pragma once
 namespace itertools{
@@ -11,24 +11,26 @@ namespace itertools{
         range(T a, T b): a(a), b(b){};
 
 
+        //same: for(range<T>::iterator i=range(a,b).begin(); i!=range(a,b).end(); ++i){
+        // T val = *i; }
         //INNER CLASS - iterator
-
         class iterator { 
            
             public:
-            T value;
-            iterator(T a): value(a){};
+            decltype(a) value;
+            iterator(decltype(a) a): value(a){};
 
             iterator& operator=(const iterator& rhs){
                 value = rhs.value;
+                return *this;
             };
             
-            T& operator*() const {
+            decltype(a)& operator*(){
                 return value;
             };
 
             const iterator operator++() {
-                value++;
+                return iterator(++value);
             };
 
             bool operator!=(const iterator& rhs) const {
@@ -38,7 +40,11 @@ namespace itertools{
         //END CLASS - iterator
 
 
-        iterator begin() {return iterator{a};};
-        iterator end() {return iterator{b};};
+        iterator begin() {
+            return iterator{a};
+        };
+        iterator end() {
+            return iterator{b};
+        };
     };
 };
