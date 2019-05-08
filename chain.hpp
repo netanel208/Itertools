@@ -2,30 +2,30 @@
 namespace itertools{
 
 
-    template<typename R1, typename R2> class chain{
+    template<class T1, class T2> class chain{
         public:
         
-        // chain(range<T> k1, range<T> k2){};
-        // template<typename R> chain(range<T> k1, R k2){};
-        // template<typename R> chain(R k1, range<T> k2){};
-        chain(R1 r1, R2 r2){};
+        T1 v1;
+        T2 v2;
+        chain(T1 v1, T2 v2):v1(v1), v2(v2){};
 
         //INNER CLASS - iterator
         class iterator { 
             
             public:
-            iterator(){};
+            T1* p;
+            iterator(T1* p = nullptr):p(p){};
 
 
             iterator& operator=(const iterator& rhs){};
-            R1& operator*() const {};/////////////
+            T1& operator*() const {};
             const iterator operator++() {};
             bool operator!=(const iterator& rhs) const {};
         };
         //END CLASS - iterator
 
 
-        iterator begin() {};
-        iterator end() {};
+        iterator begin() {return iterator{&v1}};
+        iterator end() {return iterator{&v2}};
     };
 };
