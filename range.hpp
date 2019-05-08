@@ -1,6 +1,7 @@
 /**
  * range(int,int) -> have to return refernce to object of this class
  */
+#pragma once
 namespace itertools{
 
     template<typename T> class range{
@@ -12,12 +13,14 @@ namespace itertools{
 
         //INNER CLASS - iterator
         class iterator { 
-            
+           
             public:
             iterator(){};
 
 
-            iterator& operator=(const iterator& rhs){};
+            iterator& operator=(const iterator& rhs){
+
+            };
             T& operator*() const {};
             const iterator operator++() {};
             bool operator!=(const iterator& rhs) const {};
