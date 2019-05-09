@@ -72,5 +72,5 @@ namespace itertools{
         }
         return str;
     }
-    
 };
+

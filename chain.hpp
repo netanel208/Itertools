@@ -1,8 +1,6 @@
 #include "range.hpp"
 namespace itertools{
 
-
-
     template<class T1, class T2> class Chain{
         
         T1 v1;
