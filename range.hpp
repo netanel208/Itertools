@@ -6,11 +6,11 @@
 namespace itertools{
 
     template<class T> class Range{
-        private:
+        
+        public:
         T a;
         T b;
 
-        public:
         Range(T a, T b): a(a), b(b){};
 
 
@@ -22,11 +22,6 @@ namespace itertools{
             public:
             decltype(a) value;
             iterator(decltype(a) a): value(a){};
-
-            iterator& operator=(const iterator& rhs){
-                value = rhs.value;
-                return *this;
-            };
             
             decltype(a)& operator*(){
                 return value;
@@ -38,6 +33,10 @@ namespace itertools{
 
             bool operator!=(const iterator& rhs) const {
                 return value != rhs.value;
+            };
+
+            bool operator==(const iterator& rhs) const {
+                return !(value != rhs.value);
             };
         };
         //END CLASS - iterator
@@ -62,15 +61,6 @@ namespace itertools{
             os << i;
         }
         return os;
-    }
-
-
-    template<typename T> string print(Range<T> other){
-        string str = "";
-        for(T i: other){
-            str += to_string(i);
-        }
-        return str;
     }
 };
 
