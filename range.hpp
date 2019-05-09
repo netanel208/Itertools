@@ -2,13 +2,16 @@
  * range(int,int) -> have to return refernce/new object to object of this class
  */
 #pragma once
+#include <iostream>
 namespace itertools{
 
-    template<typename T> class range{
-        public:
+    template<class T> class Range{
+        private:
         T a;
         T b;
-        range(T a, T b): a(a), b(b){};
+
+        public:
+        Range(T a, T b): a(a), b(b){};
 
 
         //same: for(range<T>::iterator i=range(a,b).begin(); i!=range(a,b).end(); ++i){
@@ -46,5 +49,28 @@ namespace itertools{
         iterator end() {
             return iterator{b};
         };
+
+        template<typename U> friend ostream& operator<< (ostream& os,  Range<U>& other);
     };
+
+    template<typename T> Range<T> range(T a, T b){
+        return Range(a,b);
+    }
+
+    template<typename U> ostream& operator<< (ostream& os,  Range<U>& other){
+        for(U i: other){
+            os << i;
+        }
+        return os;
+    }
+
+
+    template<typename T> string print(Range<T> other){
+        string str = "";
+        for(T i: other){
+            str += to_string(i);
+        }
+        return str;
+    }
+    
 };

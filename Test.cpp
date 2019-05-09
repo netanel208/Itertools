@@ -19,14 +19,22 @@ using namespace itertools;
 
 
 int main() {
-    badkan::TestCase tc("Container-like");
-    stack<int> mystack1;
-    stack<int> mystack2;
-    mystack1.push(0);mystack1.push(1);mystack1.push(2);mystack1.push(3);
-    mystack2.push(4);mystack1.push(5);mystack1.push(6);mystack1.push(7);
+    badkan::TestCase tc("Container-like"); 
+    Range<int> r1 = range(0,10);
+    Range<int> r2 = range(-9,1);
+    Range<int> r3 = range(0,1);
+    Range<char> r4 = range('a','f');
+    Range<char> r5 = range('A','F');
 
-    // tc
-    // .CHECK_EQUAL  ()
+    tc.setname("Check range")
+    .CHECK_OUTPUT  (r1,"0123456789")
+    .CHECK_OUTPUT  (r2,"-9-8-7-6-5-4-3-2-10")
+    .CHECK_OUTPUT  (r3,"0")
+    .CHECK_OUTPUT  (r4,"abcde")
+    .CHECK_OUTPUT  (r5,"ABCDE");
+    
+
+    // .CHECK_EQUAL  (print(r1),"0123456789");
     // .CHECK_OK     (true);
     // .CHECK_THROWS ((chain(mystack1,mystack2))<int>);
 
