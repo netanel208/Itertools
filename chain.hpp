@@ -1,3 +1,4 @@
+#pragma once
 #include "range.hpp"
 namespace itertools{
 
@@ -66,15 +67,15 @@ namespace itertools{
         template<typename U,typename T> friend ostream& operator<< (ostream& os,  Chain<U,T>& other);
     };
 
-  template<typename K1, typename K2> Chain<K1,K2> chain(K1 k1, K2 k2){
+    template<typename K1, typename K2> Chain<K1,K2> chain(K1 k1, K2 k2){
       return Chain(k1,k2);
-  }
+    }
 
-  template<typename U,typename T> ostream& operator<< (ostream& os,  Chain<U,T>& other){
-            typedef decltype(*(other.v1.begin())) __type;
-            for(__type i: other){
-                os << i;
-            }
-            return os;
+    template<typename U,typename T> ostream& operator<< (ostream& os,  Chain<U,T>& other){
+        typedef decltype(*(other.v1.begin())) __type;
+        for(__type i: other){
+            os << i;
         }
+        return os;
+    }
 };

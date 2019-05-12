@@ -45,6 +45,17 @@ int main() {
     list<int> k;
     k.push_back(4);k.push_back(5);k.push_back(6);k.push_back(6);
     Chain<list<int>,list<int>> c5 = chain(k,l);
+
+
+    //for zip
+    Range<int> z1 = range(0,4);
+    Range<int> z2 = range(0,4);
+    Range<char> z3 = range('a','e');
+    string z4 = string("xxxx");
+    Zip<Range<int>,Range<int>> z11 = zip(z1,z2);
+    Zip<Range<int>,Range<char>> z13 = zip(z1,z3);
+    Zip<Range<char>,string> z34 = zip(z3,z4);
+    Zip<string,list<int>> z4l = zip(z4,l);
     
 
 
@@ -62,7 +73,11 @@ int main() {
     .CHECK_OUTPUT  (c4,"01234566")
     .CHECK_OUTPUT  (c5,"45664566");
     
-
+    tc.setname("Check zip")
+    .CHECK_OUTPUT  (z11,"00112233")
+    .CHECK_OUTPUT  (z13,"0a1b2c3d")
+    .CHECK_OUTPUT  (z34,"axbxcxdx")
+    .CHECK_OUTPUT  (z4l,"x4x5x6x6");
 
     
 
