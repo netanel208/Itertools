@@ -1,3 +1,4 @@
+#pragma once
 #include "product.hpp"
 namespace itertools{
      //CLASS - Product
@@ -33,6 +34,32 @@ namespace itertools{
         };
         //END CLASS - iterator
 
+
+        //INNER CLASS - const_iterator
+        template<typename IT1> class const_iterator { 
+            
+            IT1 it_a;
+            IT1 it_b;
+
+            public:
+            const_iterator(IT1 it_a, IT1 it_b): it_a(it_a), it_b(it_b){}
+
+            const auto operator*(){
+                return Pair<decltype(*it_a),decltype(*it_b)>(*it_a,*it_b);
+            };
+            const_iterator<IT1>& operator++() {
+                // ++it_b;
+                return *this;
+                // return null;
+            };
+            bool operator!=(const const_iterator<IT1>& rhs) {
+                // return (it_a != rhs.it_a);
+                return false;
+            };
+
+        };
+        //END CLASS - const_iterator
+
         auto begin() {
             typedef decltype(v1.begin()) IT1;
             return iterator<IT1>{v1.begin(),v1.end()};
@@ -40,6 +67,17 @@ namespace itertools{
         auto end() {
             typedef decltype(v1.end()) IT1;
             return iterator<IT1>{v1.end(),v1.end()};
+        }
+        char* begin() const {
+            // auto IT1 = v1.begin();
+            // typedef decltype(v1.begin()) IT1;
+            // return const_iterator<decltype(IT1)>{IT1,v1.end()};
+            return nullptr;
+        }
+        char* end() const {
+            // typedef decltype(v1.end()) IT1;
+            // return const_iterator<IT1>{v1.end(),v1.end()};
+            return nullptr;
         }
 
         template<typename T> friend ostream& operator<< (ostream& os,  Powerset<T>& other);

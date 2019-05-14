@@ -32,7 +32,7 @@ int main() {
 
 
 
-    //for range
+    // //for range
     Range<int> r1 = range(0,10);
     Range<int> r2 = range(-9,1);
     Range<int> r3 = range(0,1);
@@ -76,10 +76,10 @@ int main() {
     Powerset<Range<int>> pw2 = powerset(r6);
     Powerset<Range<char>> pw3 = powerset(r5);
 
-    // Powerset<Range<char>> pw4 = powerset(r4);
-    // Powerset<Chain<Range<char>,string>> pw5 = powerset(c3);
-    // Powerset<Zip<Range<char>,list<int>>> pw6 = powerset(z5);
-    // Powerset<Product<Range<int>, Range<int>>> pw7 = powerset(p5);
+    Powerset<Range<char>> pw4 = powerset(r4);
+    Powerset<Chain<Range<char>,string>> pw5 = powerset(c3);
+    Powerset<Zip<Range<char>,list<int>>> pw6 = powerset(z5);
+    Powerset<Product<Range<int>, Range<int>>> pw7 = powerset(p5);
 
 
  
@@ -125,16 +125,7 @@ int main() {
     .CHECK_OUTPUT  (pw1, ",x,x,x,x,xx,xx,xx,xx,xx,xx,xxx,xxx,xxx,xxx,xxxx")
     .CHECK_OUTPUT  (pw2, ",0,1,2,3,01,02,03,12,13,23,012,013,023,123,1234")
     .CHECK_OUTPUT  (pw3, ",A,B,C,D,E,AB,AC,AD,AE,BC,BD,BE,CD,CE,DE,ABC,ABD,ABE,ACD,ACE,ADE,BCD,BCE,BDE,CDE,ABCD,ABCE,ABDE,ADCE,BDCE,ABCDE");
-
-
-
     
-
-    
-
-    // .CHECK_EQUAL  (print(r1),"0123456789");
-    // .CHECK_OK     (true);
-    // .CHECK_THROWS ((chain(mystack1,mystack2))<int>);
 
     cout << "You have " << tc.right() << " right answers and " << tc.wrong() << " wrong answers so your grade is " << tc.grade() << ". Great!" << endl;
 }

@@ -41,7 +41,7 @@ namespace itertools{
                 ++it_b;
                 return *this;
             };
-            bool operator!=(const iterator<IT1,IT2>& rhs) const { //
+            bool operator!=(const iterator<IT1,IT2>& rhs) { //
                 return ((it_a != rhs.it_a) || (it_b != rhs.it_b));
             };
 
