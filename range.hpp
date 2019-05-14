@@ -56,7 +56,7 @@ namespace itertools{
         return Range(a,b);
     }
 
-    template<typename U> ostream& operator<< (ostream& os,  Range<U>& other){
+    template<typename U> ostream& operator<< (ostream& os, Range<U>& other){
         for(U i: other){
             os << i;
         }
