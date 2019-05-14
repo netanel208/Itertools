@@ -33,15 +33,15 @@ namespace itertools{
             public:
             iterator(IT1 it_a, IT2 it_b): it_a(it_a), it_b(it_b){};
 
-            auto operator*(){
+            auto operator*() {//
                 return Pair<decltype(*it_a),decltype(*it_b)>(*it_a,*it_b);
             };
-            const iterator<IT1,IT2> operator++() {
+            iterator<IT1,IT2>& operator++() {//
                 ++it_a;
                 ++it_b;
                 return *this;
             };
-            bool operator!=(const iterator<IT1,IT2>& rhs) {
+            bool operator!=(const iterator<IT1,IT2>& rhs) const { //
                 return ((it_a != rhs.it_a) || (it_b != rhs.it_b));
             };
 

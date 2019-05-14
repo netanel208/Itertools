@@ -20,7 +20,7 @@ namespace itertools{
             auto operator*(){
                 return Pair<decltype(*it_a),decltype(*it_b)>(*it_a,*it_b);
             };
-            const iterator<IT1> operator++() {
+            iterator<IT1>& operator++() {
                 // ++it_b;
                 return *this;
                 // return null;

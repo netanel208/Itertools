@@ -8,7 +8,7 @@ namespace itertools{
         T1 v1;
         T2 v2;
 
-        Chain(T1 v1, T2 v2):v1(v1), v2(v2){}
+        Chain(T1 v1, T2 v2): v1(v1), v2(v2){}
 
         // same: for(Chain<T1,T2>::iterator i=chain(a,b).begin(); i!=chain(a,b).end(); ++i){
         // auto val = *i; }
@@ -22,7 +22,7 @@ namespace itertools{
             public:
             iterator(IT1 it_a, IT2 it_b): it_a(it_a), it_b(it_b), in_it_a(true){};
 
-            decltype(*it_a) operator*(){
+            decltype(*it_a)& operator*() {
                 if(in_it_a){
                     return *it_a;
                 }
@@ -30,7 +30,7 @@ namespace itertools{
                     return *it_b;
                 }
             };
-            const iterator<IT1,IT2> operator++() {
+            iterator<IT1,IT2>& operator++() {//
                 if(in_it_a){
                     ++it_a;
                 }
@@ -39,7 +39,7 @@ namespace itertools{
                 }
                 return *this;
             };
-            bool operator!=(const iterator<IT1,IT2>& rhs) {
+            bool operator!=(const iterator<IT1,IT2>& rhs){//
                 if(it_a == rhs.it_a && in_it_a){in_it_a = false;}
 
                 if(in_it_a){

@@ -13,26 +13,25 @@ namespace itertools{
 
         Range(T a, T b): a(a), b(b){};
 
-
         //same: for(range<T>::iterator i=range(a,b).begin(); i!=range(a,b).end(); ++i){
         // T val = *i; }
         //INNER CLASS - iterator
         class iterator { 
-           
             public:
-            decltype(a) value;
-            iterator(decltype(a) a): value(a){};
+            T value;
+            iterator(T a): value(a){}; 
             
-            decltype(a)& operator*(){
+            T& operator*() {
                 return value;
             };
 
-            const iterator operator++() {
-                return iterator(++value);
+            iterator& operator++() {
+                ++value;
+                return *this;
             };
 
-            bool operator!=(const iterator& rhs) const {
-                return value != rhs.value;
+            bool operator!=(const iterator& other) const {
+                return value != other.value;
             };
 
             bool operator==(const iterator& rhs) const {
@@ -63,4 +62,5 @@ namespace itertools{
         return os;
     }
 };
+
 
