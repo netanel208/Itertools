@@ -1,103 +1,81 @@
 #pragma once
 #include "product.hpp"
+#include <set>
+#include <math.h>
+
 namespace itertools{
-     //CLASS - Product
-    template<class T1> class Powerset{
 
-        public:
-        T1 v1;
+	template<typename T> class powerset{
 
-        Powerset(T1 v1):v1(v1){}
+		T container;
+        uint size;
 
-        //INNER CLASS - iterator
-        template<typename IT1> class iterator { 
-            
-            IT1 it_a;
-            IT1 it_b;
-
-            public:
-            iterator(IT1 it_a, IT1 it_b): it_a(it_a), it_b(it_b){}
-
-            auto operator*(){
-                return Pair<decltype(*it_a),decltype(*it_b)>(*it_a,*it_b);
-            };
-            iterator<IT1>& operator++() {
-                // ++it_b;
-                return *this;
-                // return null;
-            };
-            bool operator!=(const iterator<IT1>& rhs) {
-                // return (it_a != rhs.it_a);
-                return false;
-            };
-
-        };
-        //END CLASS - iterator
-
-
-        //INNER CLASS - const_iterator
-        template<typename IT1> class const_iterator { 
-            
-            IT1 it_a;
-            IT1 it_b;
-
-            public:
-            const_iterator(IT1 it_a, IT1 it_b): it_a(it_a), it_b(it_b){}
-
-            const auto operator*(){
-                return Pair<decltype(*it_a),decltype(*it_b)>(*it_a,*it_b);
-            };
-            const_iterator<IT1>& operator++() {
-                // ++it_b;
-                return *this;
-                // return null;
-            };
-            bool operator!=(const const_iterator<IT1>& rhs) {
-                // return (it_a != rhs.it_a);
-                return false;
-            };
-
-        };
-        //END CLASS - const_iterator
-
-        auto begin() {
-            typedef decltype(v1.begin()) IT1;
-            return iterator<IT1>{v1.begin(),v1.end()};
-        }
-        auto end() {
-            typedef decltype(v1.end()) IT1;
-            return iterator<IT1>{v1.end(),v1.end()};
-        }
-        char* begin() const {
-            // auto IT1 = v1.begin();
-            // typedef decltype(v1.begin()) IT1;
-            // return const_iterator<decltype(IT1)>{IT1,v1.end()};
-            return nullptr;
-        }
-        char* end() const {
-            // typedef decltype(v1.end()) IT1;
-            // return const_iterator<IT1>{v1.end(),v1.end()};
-            return nullptr;
+	public:
+		powerset<T>(const T container): container(container) {
+            int _size=0;
+			for (auto element : container)
+				_size++;
+			size = _size;
         }
 
-        template<typename T> friend ostream& operator<< (ostream& os,  Powerset<T>& other);
-    };
-    //END CLASS - Product
+
+		class const_iterator {
+
+			T power_set;
+			uint bin_set;	
+
+			public:
+				const_iterator(T power_set, int index): power_set(power_set), bin_set(index) {}
 
 
-    template<typename T> ostream& operator<< (ostream& os,  Powerset<T>& other){
-        for(auto i: other){
-            os << i;
-        }
-        return os;
-    }
+				auto operator*() const {
+					std::set<typename std::remove_reference<typename std::remove_const<decltype(*(container.begin()))>::type>::type> tmp_set;
+					int i=1;
+					for (auto element : power_set){
+						if (i & bin_set)
+							tmp_set.insert(element);
+						i=i<<1;
+					}
+					return tmp_set;
+				}
+
+				const_iterator& operator++() {
+					++bin_set;
+					return *this;
+				}
+
+				bool operator!=(const const_iterator& rhs) const {
+					return (this->bin_set != rhs.bin_set);
+				}
+
+				template <typename U> friend std::ostream& operator <<(std::ostream& os, const typename powerset<U>::const_iterator& it);
+
+		};  // END CLASS - const_iterator
 
 
+		auto begin() const {
+			return powerset<T>::const_iterator(container, 0);
+		}
 
-    template<typename K1> Powerset<K1> powerset(K1 k1){
-      return Powerset(k1);
-    }
+		auto end() const {
+			return powerset<T>::const_iterator(container, int(pow(2,size)));
+		}
+	};
+    // END CLASS - powerset
 
 
-    
+	template <typename U> std::ostream& operator <<(std::ostream& os, const typename powerset<U>::const_iterator& it) {
+		return os << *it;
+	}
+
+	template <typename U> std::ostream& operator <<(std::ostream& os, const typename std::set<U> tmp_set) {
+		os << "{";
+		for (auto element : tmp_set){
+			os << element << ",";
+		}
+		if (tmp_set.size()) 
+			os.seekp(-1, os.cur);
+		os << "}";
+		return os;
+}
 }

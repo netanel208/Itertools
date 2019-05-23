@@ -2,80 +2,60 @@
 #include "range.hpp"
 namespace itertools{
 
-    template<class T1, class T2> class Chain{
-        
+template<typename T1, typename T2> class chain{
+
+    public:
+    T1 v1;
+    T2 v2;
+
+    chain<T1,T2>(T1 v1, T2 v2): v1(v1), v2(v2){}
+    
+    class const_iterator{
+        typename T1::const_iterator it_curr_a;
+        typename T1::const_iterator it_end_a;
+        typename T2::const_iterator it_curr_b;
+
         public:
-        T1 v1;
-        T2 v2;
 
-        Chain(T1 v1, T2 v2): v1(v1), v2(v2){}
+        const_iterator(const typename T1::const_iterator it_curr_a, const typename T1::const_iterator it_end_a,
+         const typename T2::const_iterator it_curr_b): it_curr_a(it_curr_a), it_end_a(it_end_a), it_curr_b(it_curr_b){}
 
-        // same: for(Chain<T1,T2>::iterator i=chain(a,b).begin(); i!=chain(a,b).end(); ++i){
-        // auto val = *i; }
-        //INNER CLASS - iterator
-        template<typename IT1, typename IT2> class iterator { 
-            
-            IT1 it_a;
-            IT2 it_b;
-            bool in_it_a;
+        const auto operator*() const {
+			if (it_curr_a != it_end_a)
+				return *it_curr_a;
+			return *it_curr_b;
+		}
 
-            public:
-            iterator(IT1 it_a, IT2 it_b): it_a(it_a), it_b(it_b), in_it_a(true){};
-
-            decltype(*it_a)& operator*() {
-                if(in_it_a){
-                    return *it_a;
-                }
-                else{
-                    return *it_b;
-                }
-            };
-            iterator<IT1,IT2>& operator++() {//
-                if(in_it_a){
-                    ++it_a;
-                }
-                else{
-                    ++it_b;
-                }
-                return *this;
-            };
-            bool operator!=(const iterator<IT1,IT2>& rhs){//
-                if(it_a == rhs.it_a && in_it_a){in_it_a = false;}
-
-                if(in_it_a){
-                    return it_a != rhs.it_a;
-                }
-                else{
-                    return it_b != rhs.it_b;
-                }
-            };
-        };
-        //END CLASS - iterator
-
-
-        auto begin() {
-            typedef decltype(v1.begin()) IT1;
-            typedef decltype(v2.begin()) IT2;
-            return iterator<IT1, IT2>{v1.begin(),v2.begin()};
-        }
-        auto end() {
-            typedef decltype(v1.end()) IT1;
-            typedef decltype(v2.end()) IT2;
-            return iterator<IT1, IT2>{v1.end(),v2.end()};
+        const_iterator& operator++() {
+			if (it_curr_a != it_end_a)
+                ++it_curr_a;
+            else
+			    ++it_curr_b;
+			return *this;
         }
 
-        template<typename U,typename T> friend ostream& operator<< (ostream& os,  Chain<U,T>& other);
-    };
+        bool operator!=(const const_iterator& rhs) const {
+			return (it_curr_a != rhs.it_curr_a || it_curr_b != rhs.it_curr_b);
+        }
 
-    template<typename K1, typename K2> Chain<K1,K2> chain(K1 k1, K2 k2){
-      return Chain(k1,k2);
+        bool operator==(const const_iterator& rhs) const {
+            return !(*this!=rhs);
+        }
+
+        template <typename U, typename K>
+        friend std::ostream& operator <<(std::ostream& os, const typename chain<U,K>::iterator& it);
+    };// END CLASS - const_iterator
+
+    typename chain<T1,T2>::const_iterator begin() const {
+        return chain<T1,T2>::const_iterator(v1.begin(), v1.end(), v2.begin());
     }
 
-    template<typename U,typename T> ostream& operator<< (ostream& os,  Chain<U,T>& other){
-        typedef decltype(*(other.v1.begin())) __type;
-        for(__type i: other){
-            os << i;
-        }
-        return os;
+    typename chain<T1,T2>::const_iterator end() const {
+        return chain<T1,T2>::const_iterator(v1.end(), v1.end(), v2.end());
     }
 };
+
+template <typename U, typename K> ostream& operator <<(ostream& os, const typename chain<U,K>::const_iterator& it) {
+		return os << (*it);
+	}
+}
